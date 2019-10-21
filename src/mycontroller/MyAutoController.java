@@ -12,10 +12,14 @@ public class MyAutoController extends CarController{
 		
 		
 		private MovementHandler movementHandler;
+		private SensorHandler sensorHandler;
 		
 		public MyAutoController(Car car) {
 			super(car);
-			movementHandler = MovementHandler.getMovementHandler();
+			MovementHandler movementHandler = new MovementHandler(this);
+			SensorHandler sensorHandler = new SensorHandler(this);
+			
+			
 		}
 		
 		// Coordinate initialGuess;
@@ -23,17 +27,24 @@ public class MyAutoController extends CarController{
 		@Override
 		public void update() {
 			// Gets what the car can see
-			HashMap<Coordinate, MapTile> currentView = getView();
+			HashMap<Coordinate, MapTile> currentView = sensorHandler.getCurrentView();
+			
 			
 			// checkStateChange(); //Maybe this is where we should be checking for 1) Exploring 2) Moving toward parcel 3) Moving toward exit
 			
 			// this is where a movement strategy should be placed.
+			// create a new instance of strategy, passing in getView();
 			
+			movementHandler.move();
 			
-			if(getSpeed() < MovementHandler.CAR_MAX_SPEED){       // Need speed to turn and progress toward the exit
-				applyForwardAcceleration();   // Tough luck if there's a wall in the way
-			}
-			
+		}
+		
+		public MovementHandler getMovementHandler() {
+			return movementHandler;
+		}
+		
+		public SensorHandler getSensorHandler() {
+			return sensorHandler;
 		}
 	
 		

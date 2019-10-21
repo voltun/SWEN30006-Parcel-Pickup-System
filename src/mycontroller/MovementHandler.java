@@ -1,9 +1,9 @@
 package mycontroller;
 
+import controller.CarController;
 import java.util.HashMap;
 import tiles.MapTile;
 import utilities.Coordinate;
-import world.Car;
 import world.WorldSpatial;
 
 public class MovementHandler {
@@ -16,14 +16,30 @@ public class MovementHandler {
 			
 	private boolean isFollowingWall = false; // This is set to true when the car starts sticking to a wall.
 	
-	private Car car;
+	private CarController controller;
 	
-	public MovementHandler(Car car) {
-		this.car = car;
+	public MovementHandler(CarController controller) {
+		this.controller = controller;
+	}
+	
+	public void move() {
+		//the logic to turn the car left or right and move for this update cycle.
+		// called by MyAutoController.update()
+		
+		//create movement strategy
+		
+		if(controller.getSpeed() < MovementHandler.CAR_MAX_SPEED){       // Need speed to turn and progress toward the exit
+			controller.applyForwardAcceleration();   // Tough luck if there's a wall in the way // should be accessing through movement
+		}
+		
 	}
 	
 	public boolean isFollowingWall() {
 		return isFollowingWall;
+	}
+	
+	public void setFollowingWall(Boolean value) {
+		isFollowingWall = value;
 	}
 	
 	/**
@@ -36,7 +52,7 @@ public class MovementHandler {
 	 */
 	public boolean checkEast(HashMap<Coordinate, MapTile> currentView){
 		// Check tiles to my right
-		Coordinate currentPosition = new Coordinate(car.getPosition());
+		Coordinate currentPosition = new Coordinate(controller.getPosition());
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x+i, currentPosition.y));
 			if(tile.isType(MapTile.Type.WALL)){
@@ -48,7 +64,7 @@ public class MovementHandler {
 	
 	public boolean checkWest(HashMap<Coordinate,MapTile> currentView){
 		// Check tiles to my left
-		Coordinate currentPosition = new Coordinate(car.getPosition());
+		Coordinate currentPosition = new Coordinate(controller.getPosition());
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x-i, currentPosition.y));
 			if(tile.isType(MapTile.Type.WALL)){
@@ -60,7 +76,7 @@ public class MovementHandler {
 	
 	public boolean checkNorth(HashMap<Coordinate,MapTile> currentView){
 		// Check tiles to towards the top
-		Coordinate currentPosition = new Coordinate(car.getPosition());
+		Coordinate currentPosition = new Coordinate(controller.getPosition());
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x, currentPosition.y+i));
 			if(tile.isType(MapTile.Type.WALL)){
@@ -72,7 +88,7 @@ public class MovementHandler {
 	
 	public boolean checkSouth(HashMap<Coordinate,MapTile> currentView){
 		// Check tiles towards the bottom
-		Coordinate currentPosition = new Coordinate(car.getPosition());
+		Coordinate currentPosition = new Coordinate(controller.getPosition());
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x, currentPosition.y-i));
 			if(tile.isType(MapTile.Type.WALL)){
@@ -89,7 +105,7 @@ public class MovementHandler {
 	 * @param currentView what the car can currently see
 	 * @return
 	 */
-	private boolean checkWallAhead(WorldSpatial.Direction orientation, HashMap<Coordinate, MapTile> currentView){
+	public boolean checkWallAhead(WorldSpatial.Direction orientation, HashMap<Coordinate, MapTile> currentView){
 		switch(orientation){
 		case EAST:
 			return checkEast(currentView);
@@ -102,6 +118,28 @@ public class MovementHandler {
 		default:
 			return false;
 		}
+	}
+	
+	/**
+	 * Check if the wall is on your left hand side given your orientation
+	 * @param orientation
+	 * @param currentView
+	 * @return
+	 */
+	public boolean checkFollowingWall(WorldSpatial.Direction orientation, HashMap<Coordinate, MapTile> currentView) {
+		
+		switch(orientation){
+		case EAST:
+			return checkNorth(currentView);
+		case NORTH:
+			return checkWest(currentView);
+		case SOUTH:
+			return checkEast(currentView);
+		case WEST:
+			return checkSouth(currentView);
+		default:
+			return false;
+		}	
 	}
 
 }

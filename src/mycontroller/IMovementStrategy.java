@@ -18,6 +18,6 @@ public interface IMovementStrategy {
 	 * @param controller
 	 * @return the direction the car should take in the next update
 	 */
-	public RelativeDirection getDirection(CarController controller);
+	public RelativeDirection getDirection(MyAutoController controller);
 
 }
