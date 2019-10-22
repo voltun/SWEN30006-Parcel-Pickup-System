@@ -17,21 +17,33 @@ public class MovementHandler {
 	private boolean isFollowingWall = false; // This is set to true when the car starts sticking to a wall.
 	
 	private CarController controller;
+	private IMovementStrategy moveStrat;
+	private WorldSpatial.RelativeDirection directionToTurn;
 	
 	public MovementHandler(CarController controller) {
 		this.controller = controller;
+		this.moveStrat = new FollowWallLeftMovementStrategy();
 	}
 	
 	public void move() {
 		//the logic to turn the car left or right and move for this update cycle.
 		// called by MyAutoController.update()
 		
-		//create movement strategy
-		
+		//create movement strategy		
 		if(controller.getSpeed() < MovementHandler.CAR_MAX_SPEED){       // Need speed to turn and progress toward the exit
 			controller.applyForwardAcceleration();   // Tough luck if there's a wall in the way // should be accessing through movement
 		}
 		
+		//Turns either left, right or don't turn at all
+		directionToTurn = moveStrat.getDirection((MyAutoController) controller);
+		
+		if (directionToTurn != null) {
+			if(directionToTurn == WorldSpatial.RelativeDirection.LEFT) {
+				controller.turnLeft();
+			} else {
+				controller.turnRight();
+			}
+		}
 	}
 	
 	public boolean isFollowingWall() {

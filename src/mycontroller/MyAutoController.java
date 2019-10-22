@@ -10,15 +10,17 @@ import world.WorldSpatial;
 
 public class MyAutoController extends CarController{		
 		
+		public enum States {EXPLORING, DIRECT_MOVE};
 		
 		private MovementHandler movementHandler;
 		private SensorHandler sensorHandler;
+		private States state;
 		
 		public MyAutoController(Car car) {
 			super(car);
-			MovementHandler movementHandler = new MovementHandler(this);
-			SensorHandler sensorHandler = new SensorHandler(this);
-			
+			this.movementHandler = new MovementHandler(this);
+			this.sensorHandler = new SensorHandler(this);
+			this.state = States.EXPLORING;
 			
 		}
 		
@@ -28,12 +30,11 @@ public class MyAutoController extends CarController{
 		public void update() {
 			// Gets what the car can see
 			HashMap<Coordinate, MapTile> currentView = sensorHandler.getCurrentView();
-			
-			
+						
 			// checkStateChange(); //Maybe this is where we should be checking for 1) Exploring 2) Moving toward parcel 3) Moving toward exit
 			
-			// this is where a movement strategy should be placed.
-			// create a new instance of strategy, passing in getView();
+			// TODO this is where a movement strategy should be placed.
+			// TODO create a new instance of strategy, passing in getView();
 			
 			movementHandler.move();
 			
@@ -46,6 +47,9 @@ public class MyAutoController extends CarController{
 		public SensorHandler getSensorHandler() {
 			return sensorHandler;
 		}
-	
 		
+		//Changes the state of the controller
+		protected void changeState(States other) {
+			this.state = other;
+		}
 	}
