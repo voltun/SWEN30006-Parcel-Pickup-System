@@ -3,21 +3,19 @@
  */
 package mycontroller;
 
-import controller.CarController;
-import world.WorldSpatial.Direction;
 import world.WorldSpatial.RelativeDirection;
 
 /**
  * @author simon
  *
  */
-public interface IMovementStrategy {
+public interface IObjectRetrievalStrategy {
 	
 	/**
 	 * 
 	 * @param controller
 	 * @return the direction the car should take in the next update
 	 */
-	public RelativeDirection getDirection(MyAutoController controller);
-
+	public RelativeDirection getNextDirection(MyAutoController controller);
+	
 }
