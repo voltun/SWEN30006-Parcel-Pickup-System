@@ -9,7 +9,7 @@ import utilities.Coordinate;
  *
  */
 public class ObjectRetrievalHandler {
-	public static final String DEFAULT_OR_STRATEGY = "DjikstraObjectRetrievalStrategy";
+	public static final String DEFAULT_OR_STRATEGY = "ShortestPathObjectRetrievalStrategy";
 	
 	private CarController controller;
 	private IObjectRetrievalStrategy retrievalStrat = null;
@@ -66,7 +66,7 @@ public class ObjectRetrievalHandler {
 	public boolean goTo(Coordinate end, Graph graph) {
 		this.resetPath();
 		this.target = end;
-		retrievalStrat = StrategyFactory.getInstance().getObjectRetrievalStrategy(DEFAULT_OR_STRATEGY, graph);
+		retrievalStrat = StrategyFactory.getInstance().getObjectRetrievalStrategy(controller.getHealth(), graph);
 		this.pathToFollow = retrievalStrat.getPath(this);
 		//There is no path
 		if(pathToFollow == null) {

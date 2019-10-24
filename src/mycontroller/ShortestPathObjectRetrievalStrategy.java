@@ -15,7 +15,7 @@ import utilities.Coordinate;
  * @author Nicholas Wong
  *
  */
-public class DjikstraObjectRetrievalStrategy implements IObjectRetrievalStrategy {
+public class ShortestPathObjectRetrievalStrategy implements IObjectRetrievalStrategy {
 
     private List<Vertex> nodes;
     private List<Edge> edges;
@@ -24,7 +24,7 @@ public class DjikstraObjectRetrievalStrategy implements IObjectRetrievalStrategy
     private Map<Vertex, Vertex> predecessors;
     private Map<Vertex, Integer> distance;
 
-    public DjikstraObjectRetrievalStrategy(Graph graph) {
+    public ShortestPathObjectRetrievalStrategy(Graph graph) {
         setNodes(graph.getVertexes());
         setEdges(graph.getEdges());
     }

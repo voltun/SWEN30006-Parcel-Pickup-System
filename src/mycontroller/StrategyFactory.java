@@ -47,10 +47,18 @@ public class StrategyFactory {
 	 * @param graph - a Graph class object with information of the map
 	 * @return
 	 */
-	public IObjectRetrievalStrategy getObjectRetrievalStrategy(String strategy, Graph graph) {
-		if(strategy.equals("DjikstraObjectRetrievalStrategy")) {
-			retrievalStrat = (IObjectRetrievalStrategy) new DjikstraObjectRetrievalStrategy(graph);
+	public IObjectRetrievalStrategy getObjectRetrievalStrategy(float health, Graph graph) {
+		if(health < CompositeMinimiseDamageObjectRetrievalStrategy.MIN_HEALTH_THRESHOLD) {
+			CompositeObjectRetrievalStrategy compo = new CompositeMinimiseDamageObjectRetrievalStrategy();
+			compo.add(new ShortestPathObjectRetrievalStrategy(graph));
+			retrievalStrat = compo;
 		}
+		else {
+			CompositeObjectRetrievalStrategy compo = new CompositeMinimiseFuelObjectRetrievalStrategy();
+			compo.add(new ShortestPathObjectRetrievalStrategy(graph));
+			retrievalStrat = compo;
+		}
+		
 		return retrievalStrat;
 	}
 }
