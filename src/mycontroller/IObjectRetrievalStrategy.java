@@ -3,7 +3,8 @@
  */
 package mycontroller;
 
-import world.WorldSpatial.RelativeDirection;
+import java.util.ArrayList;
+import utilities.Coordinate;
 
 /**
  * @author simon
@@ -12,10 +13,9 @@ import world.WorldSpatial.RelativeDirection;
 public interface IObjectRetrievalStrategy {
 	
 	/**
-	 * 
-	 * @param controller
-	 * @return the direction the car should take in the next update
+	 * @param orHandler - the ObjectRetrievalHandler in charge of the strat
+	 * @return a path in an arraylist of coordinates to go to
 	 */
-	public RelativeDirection getNextDirection(MyAutoController controller);
+	public ArrayList<Coordinate> getPath(ObjectRetrievalHandler orHandler);
 	
 }

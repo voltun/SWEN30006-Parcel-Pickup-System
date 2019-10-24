@@ -104,6 +104,7 @@ public class IntelligentExplorationStrategy implements IExplorationStrategy{
 			else {}
 				//The car has a wall left, right and in front of it so it has to go back
 				//I will deal with this later
+			//TODO Meric's WIP 
 		}
 		return null;
 	}

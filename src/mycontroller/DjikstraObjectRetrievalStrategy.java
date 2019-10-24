@@ -9,23 +9,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import utilities.Coordinate;
+
 /**
  * @author Nicholas Wong
  *
  */
-public class DjikstraObjectRetrievalStrategy {
+public class DjikstraObjectRetrievalStrategy implements IObjectRetrievalStrategy {
 
-    private final List<Vertex> nodes;
-    private final List<Edge> edges;
+    private List<Vertex> nodes;
+    private List<Edge> edges;
     private Set<Vertex> settledNodes;
     private Set<Vertex> unSettledNodes;
     private Map<Vertex, Vertex> predecessors;
     private Map<Vertex, Integer> distance;
 
     public DjikstraObjectRetrievalStrategy(Graph graph) {
-        // create a copy of the array so that we can operate on this array
-        this.nodes = new ArrayList<Vertex>(graph.getVertexes());
-        this.edges = new ArrayList<Edge>(graph.getEdges());
+        setNodes(graph.getVertexes());
+        setEdges(graph.getEdges());
     }
 
     public void execute(Vertex source) {
@@ -43,7 +44,15 @@ public class DjikstraObjectRetrievalStrategy {
             findMinimalDistances(node);
         }
     }
-
+    
+    protected void setNodes(List<Vertex> nodes) {
+    	this.nodes = new ArrayList<Vertex>(nodes);
+    }
+    
+    protected void setEdges(List<Edge> edges) {
+    	this.edges = new ArrayList<Edge>(edges);
+    }
+    
     private void findMinimalDistances(Vertex node) {
         List<Vertex> adjacentNodes = getNeighbors(node);
         for (Vertex target : adjacentNodes) {
@@ -125,5 +134,23 @@ public class DjikstraObjectRetrievalStrategy {
         Collections.reverse(path);
         return path;
     }
+
+	@Override
+	public ArrayList<Coordinate> getPath(ObjectRetrievalHandler orHandler) {
+		this.execute(new Vertex(orHandler.getSource()));
+		
+		LinkedList<Vertex> pathVertex = this.getPath(new Vertex(orHandler.getTarget()));
+		//Check if path exists
+		if(pathVertex == null) {
+			return null;
+		}
+		ArrayList<Coordinate> pathCoord = new ArrayList<Coordinate>();
+		
+		for(Vertex vert : pathVertex) {
+			pathCoord.add(vert.getId());
+		}
+		System.out.println(pathCoord.toString());
+		return pathCoord;
+	}
 
 }

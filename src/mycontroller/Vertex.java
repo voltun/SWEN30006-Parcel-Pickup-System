@@ -1,21 +1,16 @@
 package mycontroller;
 
+import utilities.Coordinate;
+
 public class Vertex {
-    private final String id;
-    private final String name;
+    private final Coordinate id;
 
-
-    public Vertex(String id, String name) {
+    public Vertex(Coordinate id) {
         this.id = id;
-        this.name = name;
     }
     
-    public String getId() {
+    public Coordinate getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     @Override
@@ -45,7 +40,7 @@ public class Vertex {
 
     @Override
     public String toString() {
-        return name;
+        return id.toString();
     }
 
 }

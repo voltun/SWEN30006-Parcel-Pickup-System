@@ -25,10 +25,6 @@ public class ExplorationHandler {
 		this.pathTracker = new PathTracker();
 	}
 	
-	/**
-	 * TODO the explore method moves the car based on what direction the movement handler
-	 * returns
-	 */
 	public void update() {
 		//Stores variables to reduce overhead cost
 		Coordinate currentPos = new Coordinate(controller.getPosition());
@@ -38,8 +34,11 @@ public class ExplorationHandler {
 		this.exploreStrat = strategyFactory.getExplorationStrategy(DEFAULT_EXPLORATION_STRATEGY, 
 				currentPos, view, controller.getOrientation(), pathTracker);
 		RelativeDirection dir = this.exploreStrat.getNextDirection();
-		
-		//TODO car movement goes here
+			
+		if(controller.getSpeed() < MyAutoController.CAR_MAX_SPEED) {
+			controller.applyForwardAcceleration();
+		}
+	
 		if(dir != null) {
 			if(dir == RelativeDirection.LEFT) {
 				controller.turnLeft();
