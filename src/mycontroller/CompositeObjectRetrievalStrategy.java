@@ -16,6 +16,10 @@ public abstract class CompositeObjectRetrievalStrategy implements IObjectRetriev
 	
 	public CompositeObjectRetrievalStrategy() {}
 	
+	/**
+	 * Adds a strategy to the Composite object
+	 * @param strategy
+	 */
 	public void add(IObjectRetrievalStrategy strategy) {
 		objectRetrievalStrategies.add(strategy);
 	}

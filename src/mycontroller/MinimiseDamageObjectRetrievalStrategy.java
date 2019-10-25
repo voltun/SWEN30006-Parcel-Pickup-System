@@ -1,6 +1,3 @@
-/**
- * 
- */
 package mycontroller;
 
 import java.util.ArrayList;
@@ -13,14 +10,11 @@ import utilities.Coordinate;
  */
 public class MinimiseDamageObjectRetrievalStrategy implements IObjectRetrievalStrategy {
 
-
-	public MinimiseDamageObjectRetrievalStrategy() {
-		// TODO Auto-generated constructor stub
-	}
+	public MinimiseDamageObjectRetrievalStrategy() {}
 
 	@Override
 	public ArrayList<Coordinate> getPath(ObjectRetrievalHandler orHandler) {
-		// TODO Auto-generated method stub
+		// FOR FUTURE IMPLEMENTATION
 		return null;
 	}
 

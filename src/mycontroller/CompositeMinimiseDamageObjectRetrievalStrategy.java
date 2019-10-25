@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import utilities.Coordinate;
 
 /**
+ * For future extension where there are traps that damage the car and decide on a 
+ * best path to move the car while taking minimum possible damage
  * @author Nicholas Wong
  *
  */
@@ -19,7 +21,7 @@ public class CompositeMinimiseDamageObjectRetrievalStrategy extends CompositeObj
 
 	@Override
 	public ArrayList<Coordinate> getPath(ObjectRetrievalHandler orHandler) {
-		// TODO Auto-generated method stub
+		// For future implementation
 		return null;
 	}
 

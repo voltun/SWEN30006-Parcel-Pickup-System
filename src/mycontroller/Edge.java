@@ -1,6 +1,7 @@
 package mycontroller;
 
 /**
+ * A traversable path between 2 vertexes are linked with an edge
  * @author Nicholas Wong
  *
  */
