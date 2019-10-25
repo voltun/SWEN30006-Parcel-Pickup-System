@@ -9,16 +9,19 @@ import utilities.Coordinate;
  *
  */
 public class ObjectRetrievalHandler {
-	public static final String DEFAULT_OR_STRATEGY = "ShortestPathObjectRetrievalStrategy";
-	
 	private CarController controller;
 	private IObjectRetrievalStrategy retrievalStrat = null;
 	private ArrayList<Coordinate> pathToFollow;
 	private Coordinate target;
 	private Coordinate source;
 	private Coordinate checkpoint = null;
+	//Flag to show that the car is in currently in reverse
 	private boolean isReverse = false;
 	
+	/**
+	 * Constructor for ObjectRetrievalHandler
+	 * @param controller
+	 */
 	public ObjectRetrievalHandler(CarController controller) {
 		this.controller = controller;
 	}
@@ -96,6 +99,7 @@ public class ObjectRetrievalHandler {
 	private void steerCarTo(Coordinate target) {
 		Coordinate currentPosition = new Coordinate(controller.getPosition());
 		
+		//Stops the car if it was in reverse or it reached its target
 		if(isReverse || currentPosition.equals(target)) {
 			controller.applyBrake();
 			isReverse = false;

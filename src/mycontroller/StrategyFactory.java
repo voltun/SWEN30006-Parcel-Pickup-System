@@ -1,23 +1,22 @@
 package mycontroller;
 
 import java.util.HashMap;
-
 import tiles.MapTile;
 import utilities.Coordinate;
 import world.WorldSpatial.Direction;
 
 /**
+ * A Factory for all strategies for handlers
  * @author Nicholas Wong
  *
  */
 public class StrategyFactory {
 	private static StrategyFactory instance = null;
+	
 	private IExplorationStrategy exploreStrat = null;
 	private IObjectRetrievalStrategy retrievalStrat = null;
 	
-	private StrategyFactory() {
-
-	}
+	private StrategyFactory() {}
 	
 	/**
 	 * Factory access method
@@ -49,11 +48,13 @@ public class StrategyFactory {
 	 */
 	public IObjectRetrievalStrategy getObjectRetrievalStrategy(float health, Graph graph) {
 		if(health < CompositeMinimiseDamageObjectRetrievalStrategy.MIN_HEALTH_THRESHOLD) {
+			//Composite Strategy that could support health variant
 			CompositeObjectRetrievalStrategy compo = new CompositeMinimiseDamageObjectRetrievalStrategy();
 			compo.add(new ShortestPathObjectRetrievalStrategy(graph));
 			retrievalStrat = compo;
 		}
 		else {
+			//Composite Strategy that could support fuel variant
 			CompositeObjectRetrievalStrategy compo = new CompositeMinimiseFuelObjectRetrievalStrategy();
 			compo.add(new ShortestPathObjectRetrievalStrategy(graph));
 			retrievalStrat = compo;

@@ -1,12 +1,10 @@
-/**
- * 
- */
 package mycontroller;
 
 import java.util.ArrayList;
 import utilities.Coordinate;
 
 /**
+ * Interface for Object Retrieval related strategies
  * @author simon
  *
  */

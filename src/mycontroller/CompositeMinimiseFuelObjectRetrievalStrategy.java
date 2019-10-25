@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import utilities.Coordinate;
 
 /**
+ * Can be extended by adding more pathfinding algortihms using graphs
+ * Finds the shortest path to take (therefore less fuel usage) 
  * @author Nicholas Wong
  *
  */

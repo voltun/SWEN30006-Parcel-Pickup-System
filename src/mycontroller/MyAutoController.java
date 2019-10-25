@@ -5,7 +5,6 @@ import world.Car;
 import utilities.Coordinate;
 
 public class MyAutoController extends CarController{		
-		
 	public static final int CAR_MAX_SPEED = 1;
 	public enum States {EXPLORING, OBJECT_RETRIEVAL};
 	
@@ -13,8 +12,13 @@ public class MyAutoController extends CarController{
 	private ObjectRetrievalHandler objectRetrievalHandler;
 	private SensorHandler sensorHandler;
 	private States state;
+	//Stores the exit Coordinate
 	private Coordinate exitPos;
 	
+	/**
+	 * Constructor for MyAutoController
+	 * @param car
+	 */
 	public MyAutoController(Car car) {
 		super(car);
 		this.objectRetrievalHandler = new ObjectRetrievalHandler(this);
@@ -28,9 +32,10 @@ public class MyAutoController extends CarController{
 	// boolean notSouth = true;
 	@Override
 	public void update() {
-		sensorHandler.update();
-		//Searches if there is any parcel in the viewsquare of the car
 		Coordinate parcelPos = null;
+		
+		//Update the sensor handler to correspond to movement last update
+		sensorHandler.update();
 
 		switch(state) {
 			case EXPLORING:
@@ -53,16 +58,22 @@ public class MyAutoController extends CarController{
 					this.changeState(States.OBJECT_RETRIEVAL);
 					break;
 				} else {
+					//If parcel was not found, continue exploring
 					exploreHandler.update();
 				}				
 				break;
+				
 			case OBJECT_RETRIEVAL:
+				//Updates the path movement
 				objectRetrievalHandler.update();
+				
+				//If the car reached its target, go back to exploring
 				if(objectRetrievalHandler.hasReached()) {
 					this.changeState(States.EXPLORING);
 				}
 				break;
-			default:
+				
+			default:				
 				break;
 		}			
 		
@@ -81,17 +92,8 @@ public class MyAutoController extends CarController{
 		return sensorHandler;
 	}
 	
-	/**
-	 * @param other the state to change the controller into
-	 */
-	protected void changeState(States other) {
+	private void changeState(States other) {
 		this.state = other;
 	}
 	
-	/**
-	 * @return the current state the controller is in
-	 */
-	protected States getState() {
-		return this.state;
-	}
 }

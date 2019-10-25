@@ -15,6 +15,10 @@ public class SensorHandler {
 	private Graph graph;
 	private CarController controller;
 
+	/**
+	 * Constructor for SensorHandler
+	 * @param controller
+	 */
 	public SensorHandler(CarController controller) {
 		this.controller = controller;
 		this.lastKnownPosition = new Coordinate(controller.getPosition());
@@ -46,10 +50,11 @@ public class SensorHandler {
 	 * Scans for parcel in the viewsquare
 	 * @return Coordinate of the parcel if found, null otherwise
 	 */
-	protected Coordinate scanForParcels() {
+	public Coordinate scanForParcels() {
 		HashMap<Coordinate, MapTile> view = getCurrentView();
 		Coordinate currentPosition = new Coordinate(controller.getPosition());
 		
+		//loops through the entire viewsquare
 		for(int i = currentPosition.x - controller.getViewSquare(); 
 				i <= currentPosition.x + controller.getViewSquare(); i++) {
 			for(int j = currentPosition.y - controller.getViewSquare(); 
@@ -70,7 +75,7 @@ public class SensorHandler {
 	 * Scans for an exit in the viewsquare
 	 * @return
 	 */
-	protected Coordinate scanForExit() {
+	public Coordinate scanForExit() {
 		HashMap<Coordinate, MapTile> view = getCurrentView();
 		Coordinate currentPosition = new Coordinate(controller.getPosition());
 		

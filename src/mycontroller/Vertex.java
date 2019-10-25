@@ -2,9 +2,18 @@ package mycontroller;
 
 import utilities.Coordinate;
 
+/**
+ * Class for representing a vertex in a graph
+ * @author Nicholas Wong
+ *
+ */
 public class Vertex {
     private final Coordinate id;
 
+    /**
+     * Constructor for Vertex
+     * @param id
+     */
     public Vertex(Coordinate id) {
         this.id = id;
     }

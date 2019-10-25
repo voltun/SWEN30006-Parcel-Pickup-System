@@ -12,6 +12,8 @@ import java.util.Set;
 import utilities.Coordinate;
 
 /**
+ * An extendable strategy involving shortest possible path from source to target
+ * Implementation of naive Djikstra's Algorithm 
  * @author Nicholas Wong
  *
  */
@@ -28,7 +30,11 @@ public class ShortestPathObjectRetrievalStrategy implements IObjectRetrievalStra
         setNodes(graph.getVertexes());
         setEdges(graph.getEdges());
     }
-
+    
+    /**
+     * Readies the distance array with respect to the source vertex
+     * @param source
+     */
     public void execute(Vertex source) {
         settledNodes = new HashSet<Vertex>();
         unSettledNodes = new HashSet<Vertex>();
@@ -146,10 +152,10 @@ public class ShortestPathObjectRetrievalStrategy implements IObjectRetrievalStra
 		}
 		ArrayList<Coordinate> pathCoord = new ArrayList<Coordinate>();
 		
+		//Packs the coordinates of the vertex path into an arraylist
 		for(Vertex vert : pathVertex) {
 			pathCoord.add(vert.getId());
 		}
-		System.out.println(pathCoord.toString());
 		return pathCoord;
 	}
 
