@@ -24,7 +24,7 @@ public class IntelligentExplorationStrategy implements IExplorationStrategy{
 	private Direction orientation;
 	private Coordinate carCoordinate;
 	private HashMap<Coordinate, MapTile> currentView;
-	
+		
 	public IntelligentExplorationStrategy(Coordinate carCoord, HashMap<Coordinate, MapTile> map,
 			Direction orientation, PathTracker pathTracker){
 		this.carCoordinate = carCoord;
@@ -94,6 +94,7 @@ public class IntelligentExplorationStrategy implements IExplorationStrategy{
 			return RelativeDirection.LEFT;
 		else if(bestDirection == RelativeDirection.RIGHT && !checkRight(currentView))
 			return RelativeDirection.RIGHT;
+		
 		//To prevent the car from headbutting constantly into a wall
 		else if(checkWallAhead(currentView)) {
 			Random rand = new Random();
@@ -103,8 +104,7 @@ public class IntelligentExplorationStrategy implements IExplorationStrategy{
 				return RelativeDirection.RIGHT;
 			else {}
 				//The car has a wall left, right and in front of it so it has to go back
-				//I will deal with this later
-			//TODO Meric's WIP 
+				//It is dealt with in the ExplorationHandler
 		}
 		return null;
 	}
